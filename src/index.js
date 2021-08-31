@@ -11,18 +11,11 @@ dotenv.config();
 const PORT = process.env.PORT;
 const SECRET_KEY = process.env.SECRET_KEY;
 
-export const fastify = await Fastify({ logger: true });
+export const fastify = await Fastify({ logger: process.env.FASTIFY_LOGGER });
 
 fastify.register(FastifyJwt, { secret: SECRET_KEY });
 fastify.register(FastifyBcrypt, { saltWorkFactor: 12 });
 
-// fastify.addHook("onRequest", async (request, reply) => {
-//   try {
-//     await request.jwtVerify();
-//   } catch (err) {
-//     reply.send(err);
-//   }
-// });
 fastify.decorate("authenticate", async function (request, reply) {
   try {
     await request.jwtVerify();

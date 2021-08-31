@@ -1,4 +1,3 @@
-import { fastify } from "../index.js";
 import { getProducts, getProduct } from "../controllers/products.js";
 
 const productProperties = {

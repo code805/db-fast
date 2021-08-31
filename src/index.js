@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import Fastify from "fastify";
 import FastifyJwt from "fastify-jwt";
 import FastifyBcrypt from "fastify-bcrypt";
+import FastifyCors from "fastify-cors";
 // Local Files
 import { authRoutes } from "./routes/auth.js";
 import { productsRoutes } from "./routes/products.js";
@@ -15,6 +16,11 @@ export const fastify = await Fastify({ logger: process.env.FASTIFY_LOGGER });
 
 fastify.register(FastifyJwt, { secret: SECRET_KEY });
 fastify.register(FastifyBcrypt, { saltWorkFactor: 12 });
+
+fastify.register(FastifyCors, {
+  // put your options here
+  origin: ["http://localhost:9000"],
+});
 
 fastify.decorate("authenticate", async function (request, reply) {
   try {
